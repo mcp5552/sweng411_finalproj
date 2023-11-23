@@ -5,6 +5,7 @@
 # Quincy Nguyen 
 '''
 
+#testing github 
 #!/usr/bin/env python3
 
 import numpy as np 
