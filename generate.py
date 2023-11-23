@@ -39,7 +39,7 @@ def generate1():
     Org_ID = generate_org_id()
     Date = generate_date()	
     Timestamp = generate_timestamp()	
-    Entry_Type = generate_entry_type()	
+    Entry_Type = 1
     Region = generate_region()	
     Useless_column = generate_useless_column()	
     Category = generate_category() 
@@ -60,74 +60,133 @@ def generate1():
 
 '''generate2()
 '''
-def generate2(): 
-    pass  
+def generate2(): 	
+    User_ID	= generate_user_id()
+    Org_ID = generate_org_id()
+    Date = generate_date()	
+    Timestamp = generate_timestamp()		
+    Entry_Type = 2 
+    Region = generate_region()	
+    Resource_ID = generate_resource_ID() 
 
-'''generate3()
+
+'''generate3() 
 '''
 def generate3():  
-    pass 
+    User_ID	= generate_user_id()
+    Org_ID =  generate_org_id()
+    Date = generate_date()	
+    Timestamp = generate_timestamp()			
+    Entry_Type = 3
+    Region = generate_region()	
+    Resource_ID	= generate_resource_ID() 
+    Error_Code = generate_error_code() 
 
+
+'''generate_user_id() 
+'''
 def generate_user_id():
     pass
 
+'''generate_org_id()
+'''
 def generate_org_id():
     pass
 
+'''generate_date()
+'''
 def generate_date():
     pass
 
+'''generate_timestamp()
+'''
 def generate_timestamp():
     pass
 
-def generate_entry_type():
-    pass
-
+'''generate_region()
+'''
 def generate_region():
     pass
 
+'''generate_useless_column()
+'''
 def generate_useless_column():
     pass
 
+'''generate_category()
+'''
 def generate_category():
     pass
 
+'''generate_transaction_id()
+'''
 def generate_transaction_id():
     pass 
 
+'''generate_transaction_code()
+'''
 def generate_transaction_code():
     pass 
 
+'''generate_card_id()
+'''
 def generate_card_id():
     pass 
 
+'''generate_billing_street_1()
+'''
 def generate_billing_street_1():
     pass 
 
+'''generate_billing_street_2()
+'''
 def generate_billing_street_2():
     pass 
 
+'''generate_billing_state()
+'''
 def generate_billing_state():
     pass 
 
+'''generate_billing_zip()
+'''
 def generate_billing_zip():
     pass 
 
+'''generate_billing_country()
+'''
 def generate_billing_country(): 
     pass 
 
+'''generate_credit_card_number()
+'''
 def generate_credit_card_number():
     pass  
 
+'''generate_cvv_number()
+'''
 def generate_cvv_number(): 
     pass 
 
+'''generate_card_type()
+'''
 def generate_card_type(): 
     pass 
 
+'''generate_transaction_amount()
+'''
 def generate_transaction_amount(): 
     pass 
 
+'''generate_resource_ID()
+'''
+def generate_resource_ID(): 
+    pass
+
+''' generate_error_code() 
+'''
+def generate_error_code():
+    pass 
 
 ''' numpy sample code 
 # creating the Numpy array 
@@ -149,5 +208,5 @@ df = pd.DataFrame(data = array,
 '''
   
 # displaying the dataframe 
-print(df)
+#print(df)
 
