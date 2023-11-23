@@ -8,7 +8,6 @@ class DataHandler:
     warnings.filterwarnings('ignore')
     import configparser
 
-
     #reading the credentials securely
     credents = configparser.ConfigParser()
 

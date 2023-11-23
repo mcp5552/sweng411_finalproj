@@ -33,7 +33,6 @@ def generate():
 '''
 generate1()
 '''
-
 def generate1():   
     User_ID	= generate_user_id()
     Org_ID = generate_org_id()
