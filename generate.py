@@ -18,10 +18,6 @@ import random
 def main():
     generate()
 
-if __name__ == "__main__":
-    main()
-
-
 """ generate()
 # The main generation method which 
 """
@@ -243,3 +239,5 @@ df = pd.DataFrame(data = array,
 # displaying the dataframe 
 #print(df)
 
+if __name__ == "__main__":
+    main()
