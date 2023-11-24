@@ -11,6 +11,9 @@
 import numpy as np 
 import pandas as pd 
 import random
+
+#will need an import for the datahandler class 
+#import Etlsystem
   
 def main():
     generate()
@@ -25,11 +28,14 @@ if __name__ == "__main__":
 def generate(): 
     r = random.randint(1, 3)
     if r == 1:
-        generate1()
+        data = generate1()
     if r == 2:
-        generate2()
+        data = generate2()
     if r == 3:
-        generate3() 
+        data = generate3() 
+
+    # now make a datahandler instance 
+    # call the sendCSV method on data    
 
 '''
 generate1()
@@ -41,7 +47,6 @@ def generate1():
     Timestamp = generate_timestamp()	
     Entry_Type = 1
     Region = generate_region()	
-    Useless_column = generate_useless_column()	
     Category = generate_category() 
     Transaction_ID = generate_transaction_id()
     Transaction_Code = generate_transaction_code()
@@ -56,7 +61,20 @@ def generate1():
     Card_Type = generate_card_type()
     Transaction_Amount = generate_transaction_amount() 
 
-    #df = pd.DataFrame(data = array, index = index_values, columns = column_values) 
+    #define list of data values 
+    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Category, Transaction_ID, Transaction_Code,
+            Cart_ID, Billing_Street_1,Billing_Street_2, Billing_State,	Billing_ZIP,	Billing_Country,	Credit_Card_Number,
+                	CVV_Number,	Card_Type,	Transaction_Amount]
+
+    #define column names
+    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+                     "<useless_column>", "Category", "Transaction_ID" , "Transaction_Code", 
+                     "Cart_ID", "Billing_Street_1", "Billing_Street_2", "Billing_State", "Billing_ZIP",
+                     "Billing_Country", "Credit_Card_Number", "CVV_Number", "Card_Type", "Transaction_Amount"]
+
+    #create pandas DataFrame out of specified data and column values 
+    df = pd.DataFrame(data = data_values, columns = column_values) 
+    return df 
 
 '''generate2()
 '''
@@ -69,6 +87,16 @@ def generate2():
     Region = generate_region()	
     Resource_ID = generate_resource_ID() 
 
+    #define list of data values 
+    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Resource_ID]
+
+    #define column names
+    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+                     "<useless_column>", "Resource_ID"]
+
+    #create pandas DataFrame out of specified data and column values 
+    df = pd.DataFrame(data = data_values, columns = column_values) 
+    return df 
 
 '''generate3() 
 '''
@@ -82,6 +110,16 @@ def generate3():
     Resource_ID	= generate_resource_ID() 
     Error_Code = generate_error_code() 
 
+    #define list of data values 
+    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Resource_ID, Error_Code]
+
+    #define column names
+    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+                     "<useless_column>", "Resource_ID", "Error_Code"]
+
+    #create pandas DataFrame out of specified data and column values 
+    df = pd.DataFrame(data = data_values, columns = column_values) 
+    return df 
 
 '''generate_user_id() 
 '''
@@ -106,11 +144,6 @@ def generate_timestamp():
 '''generate_region()
 '''
 def generate_region():
-    pass
-
-'''generate_useless_column()
-'''
-def generate_useless_column():
     pass
 
 '''generate_category()
