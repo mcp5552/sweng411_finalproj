@@ -53,54 +53,50 @@ class Feature:
 # It also handles the conversion to/from CSV and Parquet file formats. 
 '''
 class DataHandler(Feature):
+    credents, aws_key, aws_secret, region, boto3_session, parquet_path  = None 
+    
     # Class constructor 
     # Initializes a boto3 session and sets up the buckets 
     def __init__(self):
-
         # Read the aws credentials file securely
         # First instantiate a configParser
-        credents = configparser.ConfigParser()
+        self.credents = configparser.ConfigParser()
 
         # Use read_file method from the configparser class 
-        credents.read_file(open('credentials.cfg'))
+        self.credents.read_file(open('credentials.cfg'))
 
         # Read the credentials data into Python variables
-        aws_key = credents["AWS"]["key"]
-        aws_secret = credents["AWS"]["secret"]
-        region = credents["AWS"]["region"]
+        self.aws_key = self.credents["AWS"]["key"]
+        self.aws_secret = self.credents["AWS"]["secret"]
+        self.region = self.credents["AWS"]["region"]
 
         # Create the boto3 session
-        boto3_session = boto3.Session(aws_access_key_id=aws_key, aws_secret_access_key=aws_secret, region_name=region)
+        self.boto3_session = boto3.Session(aws_access_key_id=self.aws_key, aws_secret_access_key=self.aws_secret, region_name=self.region)
 
         # define the paths for the csv and parquet data buckets 
-        raw_s3_bucket = 'sweng411'
-        csv_path_dir = 'csv/'
-        csv_path = f"s3://{raw_s3_bucket}/{csv_path_dir}"
-        parquet_path_dir = 'parquet/'
-        parquet_path = f"s3://{raw_s3_bucket}/{parquet_path_dir}"
+        self.raw_s3_bucket = 'sweng411'
+        self.csv_path_dir = 'csv/'
+        self.csv_path = f"s3://{self.raw_s3_bucket}/{self.csv_path_dir}"
+        self.parquet_path_dir = 'parquet/'
+        self.parquet_path = f"s3://{self.raw_s3_bucket}/{self.parquet_path_dir}"
         
-    
     #getCsv() reads a csv file in from s3 and returns a dataframe
-    @staticmethod
-    def getCsv():
-        raw_df = wr.s3.read_csv(path = csv_path, path_suffix=['.csv'], dataset = True, boto3_session = boto3_session)
+    def getCsv(self):
+        raw_df = wr.s3.read_csv(path = self.csv_path, path_suffix=['.csv'], dataset = True, boto3_session = self.boto3_session)
         return raw_df
 
     #sendCsv() writes a dataframe as a csv file to the s3 bucket for csv files 
-    @staticmethod
-    def sendCsv(df_in):
+    def sendCsv(self, df_in):
         #testing dataset=True 
-        wr.s3.to_csv(df = df_in, path = csv_path, dataset = True, boto3_session = boto3_session)
+        wr.s3.to_csv(df = df_in, path = self.csv_path, dataset = True, boto3_session = self.boto3_session)
 
     #load() writes a dataframe to the s3 bucket for parquet files 
-    @staticmethod
-    def load(df_in):
-        wr.s3.to_parquet(df = df_in, path = parquet_path, dataset=True, boto3_session = boto3_session)
+    def load(self, df_in):
+        wr.s3.to_parquet(df = df_in, path = self.parquet_path, dataset=True, boto3_session = self.boto3_session)
 
     #getParquet() reads a parquet file in the data warehouse and returns it as a CSV
-    @staticmethod
-    def getParquet():
-        raw_df = wr.s3.read_parquet(path = parquet_path, path_suffix=['.parquet'], dataset = True, boto3_session = boto3_session)
+    def getParquet(self):
+        raw_df = wr.s3.read_parquet(path = self.parquet_path, path_suffix=['.parquet'], dataset = True, boto3_session = self.boto3_session)
         return raw_df
 
 if __name__== "__main__":
