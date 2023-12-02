@@ -13,28 +13,6 @@ import warnings
 warnings.filterwarnings('ignore')
 import configparser
 
-# Read the aws credentials file securely
-# First instantiate a configParser
-credents = configparser.ConfigParser()
-
-# Use read_file method from the configparser class 
-credents.read_file(open('credentials.cfg'))
-
-# Read the credentials data into Python variables
-aws_key = credents["AWS"]["key"]
-aws_secret = credents["AWS"]["secret"]
-region = credents["AWS"]["region"]
-
-# Create the boto3 session
-boto3_session = boto3.Session(aws_access_key_id=aws_key, aws_secret_access_key=aws_secret, region_name=region)
-
-# define the paths for the csv and parquet data buckets 
-raw_s3_bucket = 'sweng411'
-csv_path_dir = 'csv/'
-csv_path = f"s3://{raw_s3_bucket}/{csv_path_dir}"
-parquet_path_dir = 'parquet/'
-parquet_path = f"s3://{raw_s3_bucket}/{parquet_path_dir}"
-
 #main method for demo purposes
 def main():
     '''
@@ -75,6 +53,33 @@ class Feature:
 # It also handles the conversion to/from CSV and Parquet file formats. 
 '''
 class DataHandler(Feature):
+    # Class constructor 
+    # Initializes a boto3 session and sets up the buckets 
+    def __init__(self):
+
+        # Read the aws credentials file securely
+        # First instantiate a configParser
+        credents = configparser.ConfigParser()
+
+        # Use read_file method from the configparser class 
+        credents.read_file(open('credentials.cfg'))
+
+        # Read the credentials data into Python variables
+        aws_key = credents["AWS"]["key"]
+        aws_secret = credents["AWS"]["secret"]
+        region = credents["AWS"]["region"]
+
+        # Create the boto3 session
+        boto3_session = boto3.Session(aws_access_key_id=aws_key, aws_secret_access_key=aws_secret, region_name=region)
+
+        # define the paths for the csv and parquet data buckets 
+        raw_s3_bucket = 'sweng411'
+        csv_path_dir = 'csv/'
+        csv_path = f"s3://{raw_s3_bucket}/{csv_path_dir}"
+        parquet_path_dir = 'parquet/'
+        parquet_path = f"s3://{raw_s3_bucket}/{parquet_path_dir}"
+        
+    
     #getCsv() reads a csv file in from s3 and returns a dataframe
     @staticmethod
     def getCsv():
