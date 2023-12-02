@@ -11,6 +11,8 @@
 import numpy as np 
 import pandas as pd 
 import random
+import string
+import datetime
 from ETLSystem import Feature
 from ETLSystem import DataHandler
   
@@ -134,24 +136,83 @@ class DataGenerator:
         return df 
 
     '''generate_user_id() 
+    # Generates a random 9-digit user id
+    # Valid data case: 9 random digits
+    # Invalid data case: 8 random digits 
     '''
     def generate_user_id():
-        pass
+        # randomly generate either valid data (1) or invalid data (2)
+        output = None 
+        r = random.randint(1, 2)
+        if r == 1: #generate valid data 
+            for i in 9: #generate a sequence of 9 random integers 
+                random_number = random.randint(0, 9)
+                output = output + str(random_number)
+            return output
+        if r == 2: #generate invalid data 
+            for i in 8: #generate a sequence of 8 random integers 
+                random_number = random.randint(0, 9)
+                output = output + str(random_number)
+            return output 
 
     '''generate_org_id()
+    # Generates a random 12-character organization id
+    # Valid data case: 12 random digits and letters 
+    # Invalid data case: 9 random digits and letters 
     '''
     def generate_org_id():
-        pass
+        output = None 
+        r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
+        if r == 1: #generate valid data 
+            for i in 12: # generate a sequence of 12 random characters 
+                q = random.randint(1,2) # decide if next character will be a letter or number randomly 
+                if q == 1: #add a number
+                    random_number = random.randint(0, 9)
+                    output = output + str(random_number)
+                if q == 2: #add a character
+                    randomLetter = random.choice(string.ascii_letters)
+                    output = output + randomLetter
+            return output
+        if r == 2: #generate invalid data 
+            for i in 9: # generate a sequence of 9 random characters 
+                q = random.randint(1,2) # decide if next character will be a letter or number randomly 
+                if q == 1: #add a number
+                    randomNumber = random.randint(0, 9)
+                    output = output + str(randomNumber)
+                if q == 2: #add a character
+                    randomLetter = random.choice(string.ascii_letters)
+                    output = output + randomLetter
+            return output
 
     '''generate_date()
+    # Generates a string version of the date using the datetime library 
+    # Valid data case: date in the format "MM/DD/YYYY"
+    # Invalid data case: date in the format "DD/MM/YYYY"
     '''
     def generate_date():
-        pass
+        output = None 
+        r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
+        date = datetime.datetime.now()
+        if r == 1:
+            output = date.strftime("%m") + "/" + date.strftime("%d") + "/" + date.strftime("%Y")
+        if r == 2:
+            output = date.strftime("%d") + "/" + date.strftime("%m") + "/" + date.strftime("%Y")
+        return output
 
     '''generate_timestamp()
+    # Generates a string version of the time using the datetime library 
+    # Valid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 12-hour time
+    # Invalid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 24-hour time 
     '''
     def generate_timestamp():
-        pass
+        output = None 
+        r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
+        date = datetime.datetime.now()
+        if r == 1:
+            output = date.strftime("%I") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
+        if r == 2:
+            output = date.strftime("%H") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
+        return output
 
     # I think we should delete generate_region and just do US for simplicity
     '''generate_region()

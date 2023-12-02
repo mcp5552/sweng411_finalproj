@@ -22,7 +22,7 @@ def main():
     while True:
         ETL_server.serve()
 
-''' ETLServer
+''' class ETLServer
 # This class 
 '''
 class ETLServer:
@@ -49,13 +49,18 @@ class ETLServer:
         #verify that parquet data has been sent successfully 
         VerifyData.verifyOutData() 
 
-
-class VerifyData:
+''' class VerifyData
+# This class 
+'''
+class VerifyData(Feature):
     def verifyInData():
         return True
     def verifyOutData():
-        return False
+        return True
 
+''' class VerifyData
+# This class 
+'''
 class Logger(Feature):
     def writeToLog():
         pass 
