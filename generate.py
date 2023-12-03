@@ -25,20 +25,20 @@ def main():
     print("Org ID: " + generate_org_id())   
     print("Date: " + generate_date())
     print("Timestamp: " + generate_timestamp())
-    print("Category = " + str(generate_category()))
+    print("Category: " + str(generate_category()))
     print("Transaction code: " + str(generate_transaction_code()))
     print("Transaction ID: " + generate_transaction_id())
     print("Billing street 1: " + str(generate_billing_street_1()))
     print("Billing street 2: " + str(generate_billing_street_2()))
     print("City: " + generate_city())
-    print("Billing state = " + str(generate_billing_state()))
-    print("Billing zip = " + generate_billing_zip())
-    print("Billing country = " + generate_billing_country())
-    print("Credit card number = " + generate_credit_card_number())
-    print("Card type = " + generate_card_type())
-    print("CVV number = " + generate_cvv_number())
-    print("Transacton amount = " + str(generate_transaction_amount()))
-    print("Error code = " + str(generate_error_code()))
+    print("Billing state: " + str(generate_billing_state()))
+    print("Billing zip: " + generate_billing_zip())
+    print("Billing country: " + generate_billing_country())
+    print("Credit card number: " + generate_credit_card_number())
+    print("Card type: " + generate_card_type())
+    print("CVV number: " + generate_cvv_number())
+    print("Transacton amount: " + str(generate_transaction_amount()))
+    print("Error code: " + str(generate_error_code()))
     
 
 """ generate()
@@ -72,6 +72,7 @@ def generate1():
     Cart_ID	= generate_card_id()
     Billing_Street_1 = generate_billing_street_1()
     Billing_Street_2 = generate_billing_street_2()
+    Billing_City = generate_billing_city()
     Billing_State = generate_billing_state()
     Billing_ZIP	= generate_billing_zip()
     Billing_Country	 = "USA"
@@ -243,8 +244,6 @@ def generate_transaction_id():
         random_number = random.randint(0, 9)
         output = output + str(random_number)
     return output
-  
-    return ""
 
 '''generate_transaction_code()
 '''

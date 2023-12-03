@@ -58,34 +58,35 @@ class DataGenerator:
         Date = self.generate_date()	
         Timestamp = self.generate_timestamp()	
         Entry_Type = 1
-        Region = self.generate_region()	
+        #Region = self.generate_region()	
         Category = self.generate_category() 
         Transaction_ID = self.generate_transaction_id()
         Transaction_Code = self.generate_transaction_code()
         Cart_ID	= self.generate_card_id()
         Billing_Street_1 = self.generate_billing_street_1()
         Billing_Street_2 = self.generate_billing_street_2()
+        Billing_City = self.generate_category()
         Billing_State = self.generate_billing_state()
         Billing_ZIP	= self.generate_billing_zip()
-        Billing_Country	 = self.generate_billing_country()
+        Billing_Country	 = "USA"
         Credit_Card_Number = self.generate_credit_card_number()
         CVV_Number = self.generate_cvv_number()
         Card_Type = self.generate_card_type()
         Transaction_Amount = self.generate_transaction_amount() 
 
         #define list of data values 
-        data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Category, Transaction_ID, Transaction_Code,
-                Cart_ID, Billing_Street_1,Billing_Street_2, Billing_State,	Billing_ZIP,	Billing_Country,	Credit_Card_Number,
+        data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Category, Transaction_ID, Transaction_Code,
+                Cart_ID, Billing_Street_1,Billing_Street_2, Billing_City, Billing_State, Billing_ZIP, Billing_Country,	Credit_Card_Number,
                         CVV_Number,	Card_Type,	Transaction_Amount]
 
         #define column names
-        column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+        column_names = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
                         "<useless_column>", "Category", "Transaction_ID" , "Transaction_Code", 
-                        "Cart_ID", "Billing_Street_1", "Billing_Street_2", "Billing_State", "Billing_ZIP",
+                        "Cart_ID", "Billing_Street_1", "Billing_Street_2", "Billing_City", "Billing_State", "Billing_ZIP",
                         "Billing_Country", "Credit_Card_Number", "CVV_Number", "Card_Type", "Transaction_Amount"]
 
         #create pandas DataFrame out of specified data and column values 
-        df = pd.DataFrame(data = data_values, columns = column_values) 
+        df = pd.DataFrame(data = data_values, columns = column_names) 
         return df 
 
     '''generate2()
@@ -97,7 +98,7 @@ class DataGenerator:
         Date = self.generate_date()	
         Timestamp = self.generate_timestamp()		
         Entry_Type = 2 
-        Region = self.generate_region()	
+        #Region = self.generate_region()	
         Resource_ID = self.generate_resource_ID() 
 
         #define list of data values 
@@ -120,7 +121,7 @@ class DataGenerator:
         Date = self.generate_date()	
         Timestamp = self.generate_timestamp()			
         Entry_Type = 3
-        Region = self.generate_region()	
+        #Region = self.generate_region()	
         Resource_ID	= self.generate_resource_ID() 
         Error_Code = self.generate_error_code() 
 
@@ -135,168 +136,267 @@ class DataGenerator:
         df = pd.DataFrame(data = data_values, columns = column_values) 
         return df 
 
-    '''generate_user_id() 
-    # Generates a random 9-digit user id
-    # Valid data case: 9 random digits
-    # Invalid data case: 8 random digits 
-    '''
-    def generate_user_id():
-        # randomly generate either valid data (1) or invalid data (2)
-        output = None 
-        r = random.randint(1, 2)
-        if r == 1: #generate valid data 
-            for i in 9: #generate a sequence of 9 random integers 
-                random_number = random.randint(0, 9)
-                output = output + str(random_number)
-            return output
-        if r == 2: #generate invalid data 
-            for i in 8: #generate a sequence of 8 random integers 
-                random_number = random.randint(0, 9)
-                output = output + str(random_number)
-            return output 
-
-    '''generate_org_id()
-    # Generates a random 12-character organization id
-    # Valid data case: 12 random digits and letters 
-    # Invalid data case: 9 random digits and letters 
-    '''
-    def generate_org_id():
-        output = None 
-        r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
-        if r == 1: #generate valid data 
-            for i in 12: # generate a sequence of 12 random characters 
-                q = random.randint(1,2) # decide if next character will be a letter or number randomly 
-                if q == 1: #add a number
-                    random_number = random.randint(0, 9)
-                    output = output + str(random_number)
-                if q == 2: #add a character
-                    randomLetter = random.choice(string.ascii_letters)
-                    output = output + randomLetter
-            return output
-        if r == 2: #generate invalid data 
-            for i in 9: # generate a sequence of 9 random characters 
-                q = random.randint(1,2) # decide if next character will be a letter or number randomly 
-                if q == 1: #add a number
-                    randomNumber = random.randint(0, 9)
-                    output = output + str(randomNumber)
-                if q == 2: #add a character
-                    randomLetter = random.choice(string.ascii_letters)
-                    output = output + randomLetter
-            return output
-
-    '''generate_date()
-    # Generates a string version of the date using the datetime library 
-    # Valid data case: date in the format "MM/DD/YYYY"
-    # Invalid data case: date in the format "DD/MM/YYYY"
-    '''
-    def generate_date():
-        output = None 
-        r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
-        date = datetime.datetime.now()
-        if r == 1:
-            output = date.strftime("%m") + "/" + date.strftime("%d") + "/" + date.strftime("%Y")
-        if r == 2:
-            output = date.strftime("%d") + "/" + date.strftime("%m") + "/" + date.strftime("%Y")
+'''generate_user_id() 
+# Generates a random 9-digit user id
+# Valid data case: 9 random digits
+# Invalid data case: 8 random digits 
+'''
+def generate_user_id():
+    # randomly generate either valid data (1) or invalid data (2)
+    output = ""
+    r = random.randint(1, 2)
+    if r == 1: #generate valid data 
+        for i in range(9): #generate a sequence of 9 random integers 
+            random_number = random.randint(0, 9)
+            output = output + str(random_number)
+        return output
+    if r == 2: #generate invalid data 
+        for i in range(8): #generate a sequence of 8 random integers 
+            random_number = random.randint(0, 9)
+            output = output + str(random_number)
         return output
 
-    '''generate_timestamp()
-    # Generates a string version of the time using the datetime library 
-    # Valid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 12-hour time
-    # Invalid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 24-hour time 
-    '''
-    def generate_timestamp():
-        output = None 
-        r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
-        date = datetime.datetime.now()
-        if r == 1:
-            output = date.strftime("%I") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
-        if r == 2:
-            output = date.strftime("%H") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
+'''generate_org_id()
+# Generates a random 12-character organization id
+# Valid data case: 12 random digits and letters 
+# Invalid data case: 9 random digits and letters 
+'''
+def generate_org_id():
+    output = "" 
+    r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
+    if r == 1: #generate valid data 
+        for i in range(12): # generate a sequence of 12 random characters 
+            q = random.randint(1,2) # decide if next character will be a letter or number randomly 
+            if q == 1: #add a number
+                random_number = random.randint(0, 9)
+                output = output + str(random_number)
+            if q == 2: #add a character
+                randomLetter = random.choice(string.ascii_letters)
+                output = output + randomLetter
+        return output
+    if r == 2: #generate invalid data 
+        for i in range(9): # generate a sequence of 9 random characters 
+            q = random.randint(1,2) # decide if next character will be a letter or number randomly 
+            if q == 1: #add a number
+                randomNumber = random.randint(0, 9)
+                output = output + str(randomNumber)
+            if q == 2: #add a character
+                randomLetter = random.choice(string.ascii_letters)
+                output = output + randomLetter
         return output
 
-    # I think we should delete generate_region and just do US for simplicity
-    '''generate_region()
-    '''
-    def generate_region():
-        pass
+'''generate_date()
+# Generates a string version of the date using the datetime library 
+# Valid data case: date in the format "MM/DD/YYYY"
+# Invalid data case: date in the format "DD/MM/YYYY"
+'''
+def generate_date():
+    output = None 
+    r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
+    date = datetime.datetime.now()
+    if r == 1:
+        output = date.strftime("%m") + "/" + date.strftime("%d") + "/" + date.strftime("%Y")
+    if r == 2:
+        output = date.strftime("%d") + "/" + date.strftime("%m") + "/" + date.strftime("%Y")
+    return output
 
-    '''generate_category()
-    '''
-    def generate_category():
-        pass
+'''generate_timestamp()
+# Generates a string version of the time using the datetime library 
+# Valid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 12-hour time
+# Invalid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 24-hour time 
+'''
+def generate_timestamp():
+    output = None 
+    r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
+    date = datetime.datetime.now()
+    if r == 1:
+        output = date.strftime("%I") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
+    if r == 2:
+        output = date.strftime("%H") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
+    return output
 
-    '''generate_transaction_id()
-    '''
-    def generate_transaction_id():
-        pass 
+'''generate_region()
+# We decided to use remove this field from our data. 
+But this method has been retained for extensibility.
+'''
+#def generate_region():
+ #   pass
 
-    '''generate_transaction_code()
-    '''
-    def generate_transaction_code():
-        pass 
+'''generate_category()
+# Random integer
+'''
+def generate_category():
+    category = random.randint(0, 9) 
+    return category
 
-    '''generate_card_id()
-    '''
-    def generate_card_id():
-        pass 
+'''generate_transaction_id()
+'''
+def generate_transaction_id():
+    output = ""
+    for i in range(13): #generate a sequence of 9 random integers 
+        random_number = random.randint(0, 9)
+        output = output + str(random_number)
+    return output
 
-    '''generate_billing_street_1()
-    '''
-    def generate_billing_street_1():
-        pass 
 
-    '''generate_billing_street_2()
-    '''
-    def generate_billing_street_2():
-        pass 
+'''generate_transaction_code()
+'''
+def generate_transaction_code():
+    output = random.randint(0, 3)
+    return output
+    
 
-    '''generate_billing_state()
-    '''
-    def generate_billing_state():
-        pass 
+'''generate_card_id()
+'''
+def generate_card_id():
+    pass 
 
-    '''generate_billing_zip()
-    '''
-    def generate_billing_zip():
-        pass 
+'''generate_billing_street_1()
+'''
+def generate_billing_street_1():
+    street_names = ["Main", "Oak", "Maple", "Pine", "Cedar", "Elm", "Birch", "Spruce", "Hill", "Valley", "Meadow", "Brook", "River", "Lake", "Park"]
+    street_types = ["St", "Ave", "Blvd", "Ln", "Dr", "Rd", "Ct", "Way", "Pl"]
 
-    '''generate_billing_country()
-    '''
-    def generate_billing_country(): 
-        pass 
+    street_name = random.choice(street_names)
+    street_type = random.choice(street_types)
+    street_number = random.randint(100, 9999)
 
-    '''generate_credit_card_number()
-    '''
-    def generate_credit_card_number():
-        pass  
+    return f"{street_number} {street_name} {street_type}"
 
-    '''generate_cvv_number()
-    '''
-    def generate_cvv_number(): 
-        pass 
+'''generate_billing_street_2()
+'''
+def generate_billing_street_2():
+    return ""
+    #street_number = random.randint(1, 1000)
 
-    '''generate_card_type()
-    '''
-    def generate_card_type(): 
-        pass 
+def generate_city(): 
+    city_Array = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", 
+                    "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Columbus", "Indianapolis", "Fort Worth", 
+                    "Charlotte", "Seattle", "Denver", "El Paso", "Detroit", "Washington", "Boston", "Memphis", "Nashville", 
+                    "Portland", "Oklahoma City", "Las Vegas", "Baltimore", "Louisville", "Milwaukee", "Albuquerque", "Tucson", 
+                    "Fresno", "Sacramento", "Mesa", "Atlanta", "Kansas City", "Colorado Springs", "Miami", "Raleigh", "Omaha", 
+                    "Long Beach", "Virginia Beach", "Oakland", "Minneapolis", "Tulsa", "Arlington", "Tampa", "New Orleans", 
+                    "Wichita", "Bakersfield", "Cleveland", "Aurora", "Anaheim", "Honolulu", "Santa Ana", "Riverside", 
+                    "Corpus Christi", "Lexington", "Stockton", "St. Louis", "Saint Paul", "Henderson", "Pittsburgh", "Cincinnati", 
+                    "Anchorage", "Greensboro", "Plano", "Newark", "Lincoln", "Orlando", "Irvine", "Toledo", "Durham", "Chula Vista", 
+                    "Fort Wayne", "Jersey City", "St. Petersburg", "Laredo", "Madison", "Buffalo", "Lubbock", "Chandler", "Scottsdale", 
+                    "Glendale", "Reno", "Norfolk", "Winston-Salem", "North Las Vegas", "Irving", "Chesapeake", "Gilbert", "Hialeah", 
+                    "Garland", "Fremont", "Baton Rouge", "Richmond", "Boise", "San Bernardino", "Spokane", "Birmingham", "Modesto", 
+                    "Des Moines", "Rochester", "Tacoma", "Fontana", "Oxnard", "Moreno Valley", "Fayetteville", "Huntington Beach", 
+                    "Yonkers", "Aurora", "Montgomery", "Amarillo", "Little Rock", "Akron", "Shreveport", "Augusta", "Grand Rapids", 
+                    "Mobile", "Salt Lake City", "Huntsville", "Tallahassee", "Grand Prairie", "Overland Park", "Knoxville", "Worcester", 
+                    "Brownsville", "Newport News", "Santa Clarita", "Port St. Lucie", "Providence", "Fort Lauderdale", "Chattanooga", 
+                    "Tempe", "Oceanside", "Garden Grove", "Rancho Cucamonga", "Cape Coral", "Santa Rosa", "Vancouver", "Sioux Falls", 
+                    "Ontario", "Peoria", "Springfield", "Pembroke Pines", "Elk Grove", "Salem", "Corona", "Eugene", "McKinney", 
+                    "Fort Collins", "Lancaster", "Cary", "Palmdale", "Hayward", "Salinas", "Frisco", "Springfield", "Pasadena", 
+                    "Macon", "Alexandria", "Pomona", "Lakewood", "Sunnyvale", "Escondido", "Kansas City", "Hollywood", 
+                    "Clarksville", "Joliet", "Rockford", "Torrance", "Naperville", "Savannah", "Paterson", "Bridgeport", 
+                    "Mesquite", "Killeen", "Syracuse", "McAllen", "Pasadena", "Bellevue", "Fullerton", "Orange", "Dayton", 
+                    "Miramar", "Thornton", "West Valley City", "Olathe", "Hampton", "Warren", "Midland", "Waco", "Charleston", 
+                    "Denton", "Cedar Rapids", "New Haven", "Roseville", "Gainesville", "Visalia", "Coral Springs", "Thousand Oaks", 
+                    "Elizabeth", "Stamford", "Concord", "Surprise", "Lafayette", "Topeka", "Kent", "Simi Valley", "Santa Clara", 
+                    "Murrieta", "Hartford", "Athens", "Victorville", "Abilene", "Norman", "Vallejo", "Berkeley", "Round Rock", 
+                    "Ann Arbor", "Cambridge", "Livonia", "Abilene", "Amarillo", "Beaumont", "Carrollton", "Erie", "Evansville", 
+                    "Independence", "Provo", "Arvada", "El Monte", "Lansing", "Midland", "Westminster", "Bridgeport", "Clearwater", 
+                    "Costa Mesa", "Fairfield", "Inglewood", "Manchester", "Murrieta", "Norwalk", "Pueblo", "Richmond", "Temecula", 
+                    "Waterbury", "West Covina", "Billings", "Broken Arrow", "Burbank", "Centennial", "Daly City", "Downey", "Elgin", 
+                    "Enterprise", "Fairfield", "Fargo", "Fayetteville", "Gresham", "Hillsboro", "Jurupa Valley", "Killeen", "Lakeland", 
+                    "Lewisville", "Lowell", "Murfreesboro", "Nampa", "North Charleston", "Odessa", "Palm Bay", "Pearland", "Renton", 
+                    "Richardson", "South Bend", "Sterling Heights", "Surprise", "Tempe", "Thornton", "Tyler", "Ventura", "West Jordan", 
+                    "West Palm Beach", "Wichita Falls", "Albany", "Allen", "Beaverton", "Brockton", "Broomfield", "Carmel", "Champaign", 
+                    "Clarksville", "Davenport", "Deerfield Beach", "Edinburg", "Fall River", "Fayetteville", "Fishers", "Gary", 
+                    "Greeley", "Hammond", "Hesperia", "High Point", "Hoboken", "Hoover", "Janesville", "Kenosha", "Lakewood", "Lawton", 
+                    "League City", "Lee's Summit", "Manchester", "Medford", "Meridian", "Mission Viejo", "New Bedford", "Newton", 
+                    "Noblesville", "Norwalk", "O'Fallon", "Orem", "Parma", "Perris", "Plymouth", "Quincy", "Rialto", "Rock Hill", "Rogers", 
+                    "Rosemead", "Roswell", "Round Rock", "Ryde", "Sandy", "Santa Maria", "Santa Monica", "Santa Rosa", "Shawnee", "Somerville", 
+                    "South Gate", "South San Francisco", "Southfield", "St. Cloud", "St. George", "St. Joseph", "St. Louis Park"]
+    random_number = random.randint(0, 299)
+    return city_Array[random_number]
 
-    '''generate_transaction_amount()
-    '''
-    def generate_transaction_amount(): 
-        pass 
+'''generate_billing_state()
+'''
+def generate_billing_state():
+    output_Array = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", 
+                    "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", 
+                    "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", 
+                    "VA", "WA", "WV", "WI", "WY"]
+    
+    random_number = random.randint(0, 49)
+    return output_Array[random_number]
 
-    '''generate_resource_ID()
-    '''
-    def generate_resource_ID(): 
-        pass
+'''generate_billing_zip() 
+'''
+def generate_billing_zip():
+    output = ""
+    for i in range(5): #generate a sequence of 9 random integers 
+        random_number = random.randint(0, 9)
+        output = output + str(random_number)
+    return output
 
-    ''' generate_error_code() 
-    '''
-    def generate_error_code():
-        pass 
+'''generate_billing_country()
+# We decided to use USA as the billing country. But this method has been retained for extensibility.
+'''
+def generate_billing_country():  
+    return "USA"
+
+'''generate_credit_card_number()
+'''
+def generate_credit_card_number():
+    output = ""
+    for i in range(4):
+        for J in range(4): #generate a sequence of 9 random integers 
+            random_number = random.randint(0, 9)
+            output = output + str(random_number)
+        if i != 3:
+            output = output + "-" 
+    return output 
+    
+
+'''generate_cvv_number()
+'''
+def generate_cvv_number(): 
+    output = ""
+    for i in range(3): #generate a sequence of 9 random integers 
+        random_number = random.randint(0, 9)
+        output = output + str(random_number)
+    return output
+    
+
+'''generate_card_type()
+'''
+def generate_card_type(): 
+    card_Array = ['Mastercard', 'Visa', 'American Express', 'Discover']
+    random_number = random.randint(0, 3)
+    return card_Array[random_number]
+
+'''generate_transaction_amount()
+'''
+def generate_transaction_amount(): 
+    dollars = str(random.randint(0, 1000))
+    cents_1 = str(random.randint(0, 9))
+    cents_2 = str(random.randint(0, 9))
+    output = dollars + "." + cents_1 + cents_2
+    
+    return output
+
+'''generate_resource_ID()
+'''
+def generate_resource_ID(): 
+    pass
+
+''' generate_error_code() 
+'''
+def generate_error_code():
+    error_Array = [100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 
+                   304, 305, 306, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 
+                   412, 413, 414, 415, 416, 417, 418, 421, 422, 423, 424, 425, 426, 428, 429, 431, 451,
+                     500, 501, 502, 503, 504, 505, 506, 507, 508, 510, 511]
+    random_number = random.randint(0, 61)
+    return error_Array[random_number]
+
 
 ''' 
 # definition of main method for demo / dev purposes 
 '''
 if __name__ == "__main__":
-    main()
+        main()
