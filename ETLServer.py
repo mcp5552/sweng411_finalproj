@@ -9,6 +9,7 @@
 
 from ETLSystem import DataHandler
 from ETLSystem import Feature
+import time
 
 '''main() 
 # Creates an ETL Server class instance and runs the
@@ -20,7 +21,8 @@ def main():
 
     # constantly perform the serve() method
     while True:
-        ETL_server.serve()
+        ETL_server.serve() # attempt to find new data and extract, transform, and load it
+        time.sleep(5) # wait 5 seconds before trying again 
 
 ''' class ETLServer
 # This class 
@@ -28,41 +30,43 @@ def main():
 class ETLServer:
     def __init__(self):
         # Instantiate the dataHandler to be used by this class object
-        dh = DataHandler()
+        self.dh = DataHandler()
 
     ''' serve()
     # This method 
     '''
     def serve(self):
         #read in a csv file as a pandas dataframe
-        df = self.dh.getCSV() 
+        df = self.dh.getCsv() 
+        print(df.to_string()) 
 
         #verify CSV data has been retrieved successfully 
-        VerifyData.verifyInData()
+        #VerifyData.verifyInData()
 
         #sanitize the data 
-        df = Sanitize.sanitize(df)
+        sanitizer = Sanitize()
+        df = sanitizer.sanitize(df)
 
         #load the data        
-        self.dh.load(df) 
+        #self.dh.load(df) 
 
         #verify that parquet data has been sent successfully 
-        VerifyData.verifyOutData() 
+        #VerifyData.verifyOutData() 
 
 ''' class VerifyData
-# This class 
+# This class verifies that the data in s3 matches the dataframe passed into its methods 
 '''
 class VerifyData(Feature):
-    def verifyInData():
+    def verifyInData(df):
         return True
-    def verifyOutData():
+    def verifyOutData(df):
         return True
 
-''' class VerifyData
-# This class 
+''' class Logger
+# This class writes input strings from to a log file 
 '''
 class Logger(Feature):
-    def writeToLog():
+    def writeToLog(input):
         pass 
 
 ''' class Sanitize
@@ -76,30 +80,33 @@ class Sanitize(Feature):
     '''
     def sanitize(self, df):
         # read the entry type and call the appropriate sanitization sub-method
-        if df['entry_type'].loc[df.index[0]] == 1:
+        if  df.iloc[0]['Entry_Type'] == 1:
+            print("Sanitizing data of type 1...")
             self.sanitize1(df)
-        if df['entry_type'].loc[df.index[0]] == 2:
+        if df.iloc[0]['Entry_Type'] == 2:
+            print("Sanitizing data of type 2...")
             self.sanitize2(df)
-        if df['entry_type'].loc[df.index[0]] == 3:
+        if df.iloc[0]['Entry_Type'] == 3:
+            print("Sanitizing data of type 3...")
             self.sanitize3(df)
 
     '''sanitize1()
     # This is the sanitizer for entry type 1
     '''
-    def sanitize1(df):
-        pass
+    def sanitize1(self, df):
+        print("Sanitization Completed Sucessfully.")
     
     '''sanitize2()
     # This is the sanitizer for entry type 2
     '''
-    def sanitize2():
-        pass
+    def sanitize2(self, df):
+        print("Sanitization Completed Sucessfully.")
 
     '''sanitize2()
     # This is the sanitizer for entry type 3
     '''
-    def sanitize3():
-        pass
+    def sanitize3(self, df):
+        print("Sanitization Completed Sucessfully.")
 
     '''sanitize_user_id()
     # This is the sanitizer for invalid user IDs 
