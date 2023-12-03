@@ -253,7 +253,7 @@ class DataGenerator(Feature):
 
 
     '''generate_transaction_code()
-    # ... 
+    # Returns a string of random integers from 0 to 3.
     '''
     def generate_transaction_code(self):
         output = random.randint(0, 3)
@@ -263,7 +263,7 @@ class DataGenerator(Feature):
     '''generate_cart_id()
     # Generates a string of 13 random integers.
     '''
-    def generate_cart_id():
+    def generate_cart_id(self):
         rand_cart_id = [random.randint(0, 9) for _ in range(13)]
         # Convert the list of integers to a string
         res = ''.join(map(str, rand_cart_id))
