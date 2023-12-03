@@ -4,7 +4,7 @@
 # Max Piazza 
 # Quincy Nguyen 
 '''
-#
+
 import datetime
 import string
 import numpy as np 
