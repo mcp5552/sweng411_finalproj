@@ -31,6 +31,7 @@ def main():
     print("Card type: " + generate_card_type())
     print("CVV number: " + generate_cvv_number())
     print("Transacton amount: " + str(generate_transaction_amount()))
+    print("Resource ID: " + generate_resource_ID())
     print("Error code: " + str(generate_error_code()))
     
 
@@ -248,6 +249,7 @@ def generate_card_id():
     pass 
 
 '''generate_billing_street_1()
+# Returns street number, street name and street type.
 '''
 def generate_billing_street_1():
     street_names = ["Main", "Oak", "Maple", "Pine", "Cedar", "Elm", "Birch", "Spruce", "Hill", "Valley", "Meadow", "Brook", "River", "Lake", "Park"]
@@ -260,10 +262,17 @@ def generate_billing_street_1():
     return f"{street_number} {street_name} {street_type}"
 
 '''generate_billing_street_2()
+# Returns street number, street name and street type.
 '''
 def generate_billing_street_2():
-    return ""
-    #street_number = random.randint(1, 1000)
+    street_names = ["Main", "Oak", "Maple", "Pine", "Cedar", "Elm", "Birch", "Spruce", "Hill", "Valley", "Meadow", "Brook", "River", "Lake", "Park"]
+    street_types = ["St", "Ave", "Blvd", "Ln", "Dr", "Rd", "Ct", "Way", "Pl"]
+
+    street_name = random.choice(street_names)
+    street_type = random.choice(street_types)
+    street_number = random.randint(100, 9999)
+
+    return f"{street_number} {street_name} {street_type}"
 
 def generate_billing_city(): 
     city_Array = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", 
@@ -310,6 +319,7 @@ def generate_billing_city():
     return city_Array[random_number]
 
 '''generate_billing_state()
+# Returns a random 2-character state abbreviation from a list of 50 
 '''
 def generate_billing_state():
     output_Array = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", 
@@ -321,6 +331,7 @@ def generate_billing_state():
     return output_Array[random_number]
 
 '''generate_billing_zip() 
+# Generates a string of 5 random numbers.
 '''
 def generate_billing_zip():
     output = ""
@@ -384,10 +395,15 @@ def generate_transaction_amount():
 
 '''generate_resource_ID()
 # This method generates a string containing a sequence of 5 random characters followed 
-# by an underscore then a sequence of 6 random integers and finally another random characters 
+# by an underscore then a sequence of 6 random integers and finally another random character. 
 '''
 def generate_resource_ID(): 
-    pass
+    random_chars = ''.join(random.choice(string.ascii_letters) for _ in range(5))
+    underscore = "_"
+    random_numbers = ''.join(str(random.randint(0, 9)) for _ in range(6))
+    random_char = random.choice(string.ascii_letters)
+    result_string = f"{random_chars}{underscore}{random_numbers}{random_char}"
+    return result_string
 
 ''' generate_error_code() 
 # This method generates a random error code from a list of 62 HTTP error code options 
