@@ -41,7 +41,7 @@ class ETLServer:
         VerifyData.verifyInData()
 
         #sanitize the data 
-        df = Transform.sanitize(df)
+        df = Sanitize.sanitize(df)
 
         #load the data        
         self.dh.load(df) 

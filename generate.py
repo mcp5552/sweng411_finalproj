@@ -261,19 +261,16 @@ def generate_billing_street_1():
 
     return f"{street_number} {street_name} {street_type}"
 
-'''generate_billing_street_2()
-# Returns street number, street name and street type.
+''' generate_billing_street_2()
+# Currently returns an empty string
+# This method can expanded later with addt'l logic
 '''
 def generate_billing_street_2():
-    street_names = ["Main", "Oak", "Maple", "Pine", "Cedar", "Elm", "Birch", "Spruce", "Hill", "Valley", "Meadow", "Brook", "River", "Lake", "Park"]
-    street_types = ["St", "Ave", "Blvd", "Ln", "Dr", "Rd", "Ct", "Way", "Pl"]
+    return "" 
 
-    street_name = random.choice(street_names)
-    street_type = random.choice(street_types)
-    street_number = random.randint(100, 9999)
-
-    return f"{street_number} {street_name} {street_type}"
-
+''' generate_billing_city()
+# This method generates a random city name from a list of 300 possible cities 
+'''
 def generate_billing_city(): 
     city_Array = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", 
                     "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Columbus", "Indianapolis", "Fort Worth", 
