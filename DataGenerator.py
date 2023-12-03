@@ -21,10 +21,12 @@ from ETLSystem import DataHandler
 # then sends that data to an S3 bucket for processing 
 '''
 def main():
+    # Instantiate a DataGenerator object 
     dg = DataGenerator() 
-    #get some data by using the generate() method
+    # Get some data by using the DataGenerator generate() method
     data = dg.generate()
     print("Data Generated.") 
+    print(data.to_string())
 
     # Create a DataHandler instance 
     '''dh = DataHandler()''' 
@@ -49,6 +51,7 @@ class DataGenerator(Feature):
     """
     def generate(self): 
         r = random.randint(1, 3)
+        print("Generating data of type: " + str(r) + "...")
         if r == 1:
             data = self.generate1()
         if r == 2:
@@ -73,7 +76,7 @@ class DataGenerator(Feature):
         Cart_ID	= self.generate_card_id()
         Billing_Street_1 = self.generate_billing_street_1()
         Billing_Street_2 = self.generate_billing_street_2()
-        Billing_City = self.generate_category()
+        Billing_City = self.generate_billing_city()
         Billing_State = self.generate_billing_state()
         Billing_ZIP	= self.generate_billing_zip()
         Billing_Country	 = "USA"
@@ -83,18 +86,19 @@ class DataGenerator(Feature):
         Transaction_Amount = self.generate_transaction_amount() 
 
         #define list of data values 
-        data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Category, Transaction_ID, Transaction_Code,
-                Cart_ID, Billing_Street_1,Billing_Street_2, Billing_City, Billing_State, Billing_ZIP, Billing_Country,	Credit_Card_Number,
-                        CVV_Number,	Card_Type,	Transaction_Amount]
+        data_values = np.array([[User_ID, Org_ID, Date, Timestamp, Entry_Type, 
+                                None, Category, Transaction_ID, Transaction_Code, Cart_ID, Billing_Street_1, 
+                                Billing_Street_2, Billing_City, Billing_State, Billing_ZIP, Billing_Country, 
+                                Credit_Card_Number, CVV_Number, Card_Type, Transaction_Amount]])
 
         #define column names
-        column_names = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
-                        "<useless_column>", "Category", "Transaction_ID" , "Transaction_Code", 
-                        "Cart_ID", "Billing_Street_1", "Billing_Street_2", "Billing_City", "Billing_State", "Billing_ZIP",
-                        "Billing_Country", "Credit_Card_Number", "CVV_Number", "Card_Type", "Transaction_Amount"]
+        column_names = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "<useless_column>", "Category", 
+                        "Transaction_ID" , "Transaction_Code", "Cart_ID", "Billing_Street_1", "Billing_Street_2", 
+                        "Billing_City", "Billing_State", "Billing_ZIP", "Billing_Country", "Credit_Card_Number", 
+                        "CVV_Number", "Card_Type", "Transaction_Amount"]
 
         #create pandas DataFrame out of specified data and column values 
-        df = 1 #pd.DataFrame(data = data_values, columns = column_names) 
+        df = pd.DataFrame(data = data_values, columns = column_names) 
         return df 
 
     '''generate2()
@@ -110,14 +114,14 @@ class DataGenerator(Feature):
         Resource_ID = self.generate_resource_ID() 
 
         #define list of data values 
-        data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Resource_ID]
+        data_values = np.array([[User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Resource_ID]])
 
         #define column names
         column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", 
                         "<useless_column>", "Resource_ID"]
 
         #create pandas DataFrame out of specified data and column values 
-        df = 1 # pd.DataFrame(data = data_values, columns = column_values) 
+        df = pd.DataFrame(data = data_values, columns = column_values) 
         return df 
 
     '''generate3()
@@ -134,14 +138,14 @@ class DataGenerator(Feature):
         Error_Code = self.generate_error_code() 
 
         #define list of data values 
-        data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Resource_ID, Error_Code]
+        data_values = np.array([[User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Resource_ID, Error_Code]])
 
         #define column names
         column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type",
                         "<useless_column>", "Resource_ID", "Error_Code"]
 
         #create pandas DataFrame out of specified data and column values 
-        df = 1 #pd.DataFrame(data = data_values, columns = column_values) 
+        df = pd.DataFrame(data = data_values, columns = column_values) 
         return df 
 
     '''generate_user_id() 
