@@ -16,7 +16,9 @@ import random
 #import Etlsystem
   
 def main():
-    generate()
+    #generate()
+    
+    print(generate_transaction_id())
 
 """ generate()
 # The main generation method which 
@@ -139,8 +141,8 @@ def generate_timestamp():
 
 '''generate_region()
 '''
-def generate_region():
-    pass
+#def generate_region():
+ #   pass
 
 '''generate_category()
 '''
@@ -150,7 +152,7 @@ def generate_category():
 '''generate_transaction_id()
 '''
 def generate_transaction_id():
-    pass 
+    return "hello"
 
 '''generate_transaction_code()
 '''
