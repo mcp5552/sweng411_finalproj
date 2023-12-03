@@ -73,7 +73,7 @@ class DataGenerator(Feature):
         Category = self.generate_category() 
         Transaction_ID = self.generate_transaction_id()
         Transaction_Code = self.generate_transaction_code()
-        Cart_ID	= self.generate_card_id()
+        Cart_ID	= self.generate_cart_id()
         Billing_Street_1 = self.generate_billing_street_1()
         Billing_Street_2 = self.generate_billing_street_2()
         Billing_City = self.generate_billing_city()
@@ -260,11 +260,14 @@ class DataGenerator(Feature):
         return output
         
 
-    '''generate_card_id()
-    # ... 
+    '''generate_cart_id()
+    # Generates a string of 13 random integers.
     '''
-    def generate_card_id(self):
-        pass 
+    def generate_cart_id():
+        rand_cart_id = [random.randint(0, 9) for _ in range(13)]
+        # Convert the list of integers to a string
+        res = ''.join(map(str, rand_cart_id))
+        return "#" + res
 
     '''generate_billing_street_1()
     # Returns a string containing a random number from 1-9999 followed by a space then

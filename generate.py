@@ -14,25 +14,26 @@ import random
   
 def main():
     #generate()
-    print("User ID: " + generate_user_id()) 
-    print("Org ID: " + generate_org_id())   
-    print("Date: " + generate_date())
-    print("Timestamp: " + generate_timestamp())
-    print("Category: " + str(generate_category()))
-    print("Transaction code: " + str(generate_transaction_code()))
-    print("Transaction ID: " + generate_transaction_id())
-    print("Billing street 1: " + str(generate_billing_street_1()))
-    print("Billing street 2: " + str(generate_billing_street_2()))
-    print("City: " + generate_billing_city())
-    print("Billing state: " + str(generate_billing_state()))
-    print("Billing zip: " + generate_billing_zip())
-    print("Billing country: " + generate_billing_country())
-    print("Credit card number: " + generate_credit_card_number())
-    print("Card type: " + generate_card_type())
-    print("CVV number: " + generate_cvv_number())
-    print("Transacton amount: " + str(generate_transaction_amount()))
-    print("Resource ID: " + generate_resource_ID())
-    print("Error code: " + str(generate_error_code()))
+    print("1. User ID: " + generate_user_id()) 
+    print("2. Org ID: " + generate_org_id())   
+    print("3. Date: " + generate_date())
+    print("4. Timestamp: " + generate_timestamp())
+    print("5. Category: " + str(generate_category()))
+    print("6. Transaction ID: " + generate_transaction_id())
+    print("7. Transaction code: " + str(generate_transaction_code()))
+    print("8. Cart ID: " + str(generate_cart_id()))
+    print("9. Billing street 1: " + str(generate_billing_street_1()))
+    print("10. Billing street 2: " + str(generate_billing_street_2()))
+    print("11. City: " + generate_billing_city())
+    print("12. Billing state: " + str(generate_billing_state()))
+    print("13. Billing zip: " + generate_billing_zip())
+    print("14. Billing country: " + generate_billing_country())
+    print("15. Credit card number: " + generate_credit_card_number())
+    print("16. Card type: " + generate_card_type())
+    print("17. CVV number: " + generate_cvv_number())
+    print("18. Transacton amount: " + str(generate_transaction_amount()))
+    print("19. Resource ID: " + generate_resource_ID())
+    print("20. Error code: " + str(generate_error_code()))
     
 
 """ generate()
@@ -60,7 +61,7 @@ def generate1():
     Category = generate_category() 
     Transaction_ID = generate_transaction_id()
     Transaction_Code = generate_transaction_code()
-    Cart_ID	= generate_card_id()
+    Cart_ID	= generate_cart_id()
     Billing_Street_1 = generate_billing_street_1()
     Billing_Street_2 = generate_billing_street_2()
     Billing_City = generate_billing_city()
@@ -243,10 +244,15 @@ def generate_transaction_code():
     return output
     
 
-'''generate_card_id()
+'''generate_cart_id()
+# Generates a string of 13 random integers.
 '''
-def generate_card_id():
-    pass 
+def generate_cart_id():
+    rand_cart_id = [random.randint(0, 9) for _ in range(13)]
+    # Convert the list of integers to a string
+    res = ''.join(map(str, rand_cart_id))
+    return "#" + res
+     
 
 '''generate_billing_street_1()
 # Returns street number, street name and street type.
