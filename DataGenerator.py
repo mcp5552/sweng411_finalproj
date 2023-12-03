@@ -29,10 +29,12 @@ def main():
     print(data.to_string())
 
     # Create a DataHandler instance 
-    '''dh = DataHandler()''' 
+    dh = DataHandler()
 
     # call the sendCSV method on the data   
-    '''dh.sendCsv(data)'''
+    print("Sending data to cloud...") 
+    dh.sendCsv(data)
+    print("Sent!") 
 
 ''' class DataGenerator
 # Contains the definition of the generate() method and all the sub-methods
