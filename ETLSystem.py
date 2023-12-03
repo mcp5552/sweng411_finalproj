@@ -53,7 +53,7 @@ class Feature:
 # It also handles the conversion to/from CSV and Parquet file formats. 
 '''
 class DataHandler(Feature):
-    credents, aws_key, aws_secret, region, boto3_session, parquet_path  = None 
+    #credents, aws_key, aws_secret, region, boto3_session, parquet_path  = None 
     
     # Class constructor 
     # Initializes a boto3 session and sets up the buckets 
