@@ -336,6 +336,8 @@ def generate_billing_country():
     return "USA"
 
 '''generate_credit_card_number()
+# Generates a string containing 4 sequences of 4 random ints, with 3 dashes 
+# inserted after the 1st through third sequences of ints 
 '''
 def generate_credit_card_number():
     output = ""
@@ -349,6 +351,7 @@ def generate_credit_card_number():
     
 
 '''generate_cvv_number()
+# Generates a string contaning 3 random integers
 '''
 def generate_cvv_number(): 
     output = ""
@@ -359,6 +362,8 @@ def generate_cvv_number():
     
 
 '''generate_card_type()
+# Generates a string randomly containing either 'Mastercard', 'Visa', 
+# 'American Express', or 'Discover'
 '''
 def generate_card_type(): 
     card_Array = ['Mastercard', 'Visa', 'American Express', 'Discover']
@@ -366,6 +371,8 @@ def generate_card_type():
     return card_Array[random_number]
 
 '''generate_transaction_amount()
+# Generates string containing an integer between 0-1000 followed by a "."
+# then a sequence of two random integers between 0-9
 '''
 def generate_transaction_amount(): 
     dollars = str(random.randint(0, 1000))
@@ -376,11 +383,14 @@ def generate_transaction_amount():
     return output
 
 '''generate_resource_ID()
+# This method generates a string containing a sequence of 5 random characters followed 
+# by an underscore then a sequence of 6 random integers and finally another random characters 
 '''
 def generate_resource_ID(): 
     pass
 
 ''' generate_error_code() 
+# This method generates a random error code from a list of 62 HTTP error code options 
 '''
 def generate_error_code():
     error_Array = [100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 
