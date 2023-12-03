@@ -4,9 +4,6 @@
 # Max Piazza 
 # Quincy Nguyen 
 '''
-# Quincy test gen comment
-#testing github 
-#!/usr/bin/env python3
 
 import datetime
 import string
@@ -14,10 +11,6 @@ import numpy as np
 import pandas as pd 
 import random
 #from random_address import real_random_address
-
-
-#will need an import for the datahandler class 
-#import Etlsystem
   
 def main():
     #generate()
@@ -30,7 +23,7 @@ def main():
     print("Transaction ID: " + generate_transaction_id())
     print("Billing street 1: " + str(generate_billing_street_1()))
     print("Billing street 2: " + str(generate_billing_street_2()))
-    print("City: " + generate_city())
+    print("City: " + generate_billing_city())
     print("Billing state: " + str(generate_billing_state()))
     print("Billing zip: " + generate_billing_zip())
     print("Billing country: " + generate_billing_country())
@@ -52,9 +45,6 @@ def generate():
         data = generate2()
     if r == 3:
         data = generate3() 
-
-    # now make a datahandler instance 
-    # call the sendCSV method on data    
 
 '''
 generate1()
@@ -82,14 +72,14 @@ def generate1():
     Transaction_Amount = generate_transaction_amount() 
 
     #define list of data values 
-    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Category, Transaction_ID, Transaction_Code,
-            Cart_ID, Billing_Street_1,Billing_Street_2, Billing_State,	Billing_ZIP,	Billing_Country,	Credit_Card_Number,
+    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Category, Transaction_ID, Transaction_Code,
+            Cart_ID, Billing_Street_1, Billing_Street_2, Billing_State,	Billing_City, Billing_ZIP,	Billing_Country, Credit_Card_Number,
                 	CVV_Number,	Card_Type,	Transaction_Amount]
 
     #define column names
-    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type",
                      "<useless_column>", "Category", "Transaction_ID" , "Transaction_Code", 
-                     "Cart_ID", "Billing_Street_1", "Billing_Street_2", "Billing_State", "Billing_ZIP",
+                     "Cart_ID", "Billing_Street_1", "Billing_Street_2", "Billing_City", "Billing_State", "Billing_ZIP",
                      "Billing_Country", "Credit_Card_Number", "CVV_Number", "Card_Type", "Transaction_Amount"]
 
     #create pandas DataFrame out of specified data and column values 
@@ -108,10 +98,10 @@ def generate2():
     Resource_ID = generate_resource_ID() 
 
     #define list of data values 
-    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Resource_ID]
+    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type,None, Resource_ID]
 
     #define column names
-    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", 
                      "<useless_column>", "Resource_ID"]
 
     #create pandas DataFrame out of specified data and column values 
@@ -131,10 +121,10 @@ def generate3():
     Error_Code = generate_error_code() 
 
     #define list of data values 
-    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, Region, None, Resource_ID, Error_Code]
+    data_values = [User_ID, Org_ID, Date, Timestamp, Entry_Type, None, Resource_ID, Error_Code]
 
     #define column names
-    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Region", 
+    column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", 
                      "<useless_column>", "Resource_ID", "Error_Code"]
 
     #create pandas DataFrame out of specified data and column values 
@@ -194,7 +184,7 @@ def generate_org_id():
     # Generates a string version of the date using the datetime library 
     # Valid data case: date in the format "MM/DD/YYYY"
     # Invalid data case: date in the format "DD/MM/YYYY"
-    '''
+'''
 def generate_date():
     output = None 
     r = random.randint(1, 2) # randomly generate either valid data (1) or invalid data (2)
@@ -225,7 +215,7 @@ def generate_timestamp():
 But this method has been retained for extensibility.
 '''
 #def generate_region():
- #   pass
+#pass
 
 '''generate_category()
 # Random integer
@@ -275,7 +265,7 @@ def generate_billing_street_2():
     return ""
     #street_number = random.randint(1, 1000)
 
-def generate_city(): 
+def generate_billing_city(): 
     city_Array = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", 
                     "Dallas", "San Jose", "Austin", "Jacksonville", "San Francisco", "Columbus", "Indianapolis", "Fort Worth", 
                     "Charlotte", "Seattle", "Denver", "El Paso", "Detroit", "Washington", "Boston", "Memphis", "Nashville", 
