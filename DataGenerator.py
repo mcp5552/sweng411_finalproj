@@ -38,12 +38,6 @@ def main():
 # needed to generate demo data.  
 '''
 class DataGenerator(Feature):
-    ''' Class Constructor
-    # Here in case needed later 
-    '''
-    def __init__(self):
-        pass   
-
     """ generate()
     # The main generation method which randomly generates one of 
     # 3 types of data

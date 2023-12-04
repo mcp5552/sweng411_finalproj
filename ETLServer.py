@@ -252,91 +252,91 @@ class Sanitize(Feature):
     '''sanitize_useless_column()
     # This is the sanitizer for the useless column
     '''
-    def sanitize_useless_column(self, df): 
+    def sanitize_useless_column(self): 
         pass
 
     '''sanitize_category()
     # This is the sanitizer for invalid categories
     '''
-    def sanitize_category(self, df) : 
+    def sanitize_category(self) : 
         pass
 
     '''sanitize_transaction_id()
     # This is the sanitizer for invalid transaction IDs
     '''
-    def sanitize_transaction_id(self, df): 
+    def sanitize_transaction_id(self): 
         pass
 
     '''sanitize_transaction_code() 
     # This is the sanitizer for invalid transaction codes
     '''
-    def sanitize_transaction_code(self, df): 
+    def sanitize_transaction_code(self): 
         pass
 
     '''sanitize_cart_id()
     # This is the sanitizer for invalid cart IDs
     '''
-    def sanitize_cart_id(self, df) : 
+    def sanitize_cart_id(self) : 
         pass
 
     '''sanitize_billing_street_1()
     # This is the sanitizer for invalid billing street 1 fields
     '''
-    def sanitize_billing_street_1(self, df) : 
+    def sanitize_billing_street_1(self) : 
         pass
 
     '''sanitize_billing_street_2()
     # This is the sanitizer for invalid billing street 2 fields
     '''
-    def sanitize_billing_street_2(self, df) : 
+    def sanitize_billing_street_2(self) : 
         pass
 
     '''sanitize_billing_state_2()
     # This is the sanitizer for invalid billing states
     '''
-    def sanitize_billing_state(self, df) : 
+    def sanitize_billing_state(self) : 
         pass
 
     '''sanitize_billing_zip()
     # This is the sanitizer for invalid billing ZIPs
     '''
-    def sanitize_billing_zip(self, df) : 
+    def sanitize_billing_zip(self) : 
         pass
 
     '''sanitize_credit_card_number()
     # This is the sanitizer for invalid credit card numbers
     '''
-    def sanitize_credit_card_number(self, df) : 
+    def sanitize_credit_card_number(self) : 
         pass
 
     '''sanitize_cvv_number()
     # This is the sanitizer for invalid CVV numbers
     '''
-    def sanitize_cvv_number(self, df) : 
+    def sanitize_cvv_number(self) : 
         pass
 
     '''sanitize_cvv_type()
     # This is the sanitizer for invalid CVV types
     '''
-    def sanitize_card_type(self, df) : 
+    def sanitize_card_type(self) : 
         pass
 
     '''sanitize_transaction_amount()
     # This is the sanitizer for invalid transaction amounts
     '''
-    def sanitize_transaction_amount(self, df) : 
+    def sanitize_transaction_amount(self) : 
         pass
 
     '''sanitize_resource_ID()
     # This is the sanitizer for invalid resource IDs
     '''
-    def sanitize_resource_ID(self, df) : 
+    def sanitize_resource_ID(self) : 
         pass
 
     '''sanitize_error_code()
     # This is the sanitizer for invalid error codes 
     '''
-    def sanitize_error_code(self, df) : 
+    def sanitize_error_code(self) : 
         pass
  
 if __name__== "__main__":
