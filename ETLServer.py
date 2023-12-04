@@ -10,47 +10,55 @@
 from ETLSystem import DataHandler
 from ETLSystem import Feature
 import time
+import numpy as np
+import pandas as pd
+import datetime
 
 '''main() 
 # Creates an ETL Server class instance and runs the
 # serve() method from that class 
 '''
 def main():
-    #create an instance of the ETL server class
-    ETL_server = ETLServer()
-
-    # constantly perform the serve() method
-    while True:
-        ETL_server.serve() # attempt to find new data and extract, transform, and load it
+    ETL_Server = ETLServer() # Create an instance of the ETLServer class
+    ETL_Server.serve() # attempt to find new data and extract, transform, and load it
+    
+    # While loop for constantly performing the serve() method
+    '''while True:
         time.sleep(5) # wait 5 seconds before trying again 
+    '''
 
 ''' class ETLServer
-# This class 
+# This class contains the serve() method that is used to serve data ETL requests.
 '''
 class ETLServer:
     def __init__(self):
-        # Instantiate the dataHandler to be used by this class object
-        self.dh = DataHandler()
+        self.dh = DataHandler() # Instantiate the dataHandler to be used by this class object
 
     ''' serve()
-    # This method 
+    # This method gets input data, instantiates a sanitizer, calls the sanitize() method
+    # on the data to get output data, then loads the output data to S3 in parquet format 
     '''
     def serve(self):
-        #read in a csv file as a pandas dataframe
+        # Read in a .csv file as a pandas dataframe
         df = self.dh.getCsv() 
-        print(df.to_string()) 
+        print("Raw Data: " + df.to_string()) 
 
-        #verify CSV data has been retrieved successfully 
+        # Verify csv data has been retrieved successfully 
         #VerifyData.verifyInData()
 
         #sanitize the data 
         sanitizer = Sanitize()
-        df = sanitizer.sanitize(df)
+        out_df = sanitizer.sanitize(df)
 
-        #load the data        
-        #self.dh.load(df) 
+        print("Sanitized dataframe:")
+        print(out_df.to_string())
 
-        #verify that parquet data has been sent successfully 
+        # load the data      
+        print("Loading Data...")  
+        self.dh.load(out_df) 
+        print("Data Loaded to Warehouse Sucessfully!")
+
+        # Verify that parquet data has been sent successfully 
         #VerifyData.verifyOutData() 
 
 ''' class VerifyData
@@ -82,80 +90,164 @@ class Sanitize(Feature):
         # read the entry type and call the appropriate sanitization sub-method
         if  df.iloc[0]['Entry_Type'] == 1:
             print("Sanitizing data of type 1...")
-            self.sanitize1(df)
+            df2 = self.sanitize1(df)
         if df.iloc[0]['Entry_Type'] == 2:
             print("Sanitizing data of type 2...")
-            self.sanitize2(df)
+            df2 = self.sanitize2(df)
         if df.iloc[0]['Entry_Type'] == 3:
             print("Sanitizing data of type 3...")
-            self.sanitize3(df)
+            df2 = self.sanitize3(df)
+        return df2 
 
     '''sanitize1()
     # This is the sanitizer for entry type 1
     '''
     def sanitize1(self, df):
-        user_id = self.sanitize_user_id(df)
-        org_id = self.sanitize_org_id(df)
-        date = self.sanitize_date(df)
-        time = self.sanitize_timestamp(df)
-        self.sanitize_useless_column(df)
-        print("Sanitization Completed Sucessfully.")
+        User_ID	= df.iloc[0]['User_ID']
+        Org_ID = df.iloc[0]['Org_ID']
+        Date = df.iloc[0]['Date']
+        Timestamp = df.iloc[0]['Timestamp']
+
+        # Update fields by calling sanitizer methods 
+        User_ID = self.sanitize_user_id(User_ID)
+        Org_ID = self.sanitize_org_id(Org_ID)
+        Date = self.sanitize_date(Date)
+        Timestamp = self.sanitize_timestamp(Timestamp)
+
+        Entry_Type = 1
+        #Region = df.iloc[0]['Region']
+        Category = df.iloc[0]['Category']
+        Transaction_ID = df.iloc[0]['Transaction_ID']
+        Transaction_Code = df.iloc[0]['Transaction_Code']
+        Cart_ID	= df.iloc[0]['Cart_ID']
+        Billing_Street_1 = df.iloc[0]['Billing_Street_1']
+        Billing_Street_2 = df.iloc[0]['Billing_Street_2']
+        Billing_City = df.iloc[0]['Billing_City']
+        Billing_State = df.iloc[0]['Billing_State']
+        Billing_ZIP	= df.iloc[0]['Billing_ZIP']
+        Billing_Country	 = df.iloc[0]['Billing_Country']
+        Credit_Card_Number = df.iloc[0]['Credit_Card_Number']
+        CVV_Number = df.iloc[0]['CVV_Number']
+        Card_Type = df.iloc[0]['Card_Type']
+        Transaction_Amount = df.iloc[0]['Transaction_Amount']
+
+        #define list of data values 
+        data_values = np.array([[User_ID, Org_ID, Date, Timestamp, Entry_Type, 
+                                Category, Transaction_ID, Transaction_Code, Cart_ID, Billing_Street_1, 
+                                Billing_Street_2, Billing_City, Billing_State, Billing_ZIP, Billing_Country, 
+                                Credit_Card_Number, CVV_Number, Card_Type, Transaction_Amount]])
+
+        #define column names
+        column_names = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Category", 
+                        "Transaction_ID" , "Transaction_Code", "Cart_ID", "Billing_Street_1", "Billing_Street_2", 
+                        "Billing_City", "Billing_State", "Billing_ZIP", "Billing_Country", "Credit_Card_Number", 
+                        "CVV_Number", "Card_Type", "Transaction_Amount"]
+        
+        #create pandas DataFrame out of specified data and column values 
+        df2 = pd.DataFrame(data = data_values, columns = column_names) 
+        return df2 
     
     '''sanitize2()
     # This is the sanitizer for entry type 2
     '''
     def sanitize2(self, df):
-        user_id = self.sanitize_user_id(df)
-        org_id = self.sanitize_org_id(df)
-        date = self.sanitize_date(df)
-        time = self.sanitize_timestamp(df)
-        self.sanitize_useless_column(df)
+        User_ID	= df.iloc[0]['User_ID']
+        Org_ID = df.iloc[0]['Org_ID']
+        Date = df.iloc[0]['Date']
+        Timestamp = df.iloc[0]['Timestamp']
+        Entry_Type = 2
+
+        # Update fields by calling sanitizer methods 
+        User_ID = self.sanitize_user_id(User_ID)
+        Org_ID = self.sanitize_org_id(Org_ID)
+        Date = self.sanitize_date(Date)
+        Timestamp = self.sanitize_timestamp(Timestamp)
         print("Sanitization Completed Sucessfully.")
 
-    '''sanitize2()
+        Resource_ID = df.iloc[0]['Resource_ID'] 
+        #define list of data values 
+        data_values = np.array([[User_ID, Org_ID, Date, Timestamp, Entry_Type, Resource_ID]])
+
+        #define column names
+        column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Resource_ID"]
+
+        #create pandas DataFrame out of specified data and column values 
+        df2 = pd.DataFrame(data = data_values, columns = column_values) 
+        return df2 
+
+    '''sanitize3()
     # This is the sanitizer for entry type 3
     '''
     def sanitize3(self, df):
-        user_id = self.sanitize_user_id(df)
-        org_id = self.sanitize_org_id(df)
-        date = self.sanitize_date(df)
-        time = self.sanitize_timestamp(df)
-        self.sanitize_useless_column(df)
- 
+        User_ID	= df.iloc[0]['User_ID']
+        Org_ID = df.iloc[0]['Org_ID']
+        Date = df.iloc[0]['Date']
+        Timestamp = df.iloc[0]['Timestamp']
+
+        # Update fields by calling sanitizer methods 
+        User_ID = self.sanitize_user_id(User_ID)
+        Org_ID = self.sanitize_org_id(Org_ID)
+        Date = self.sanitize_date(Date)
+        Time = self.sanitize_timestamp(Timestamp)
         print("Sanitization Completed Sucessfully.")
+
+        Entry_Type = 2
+        Resource_ID = df.iloc[0]['Resource_ID']
+        Error_Code = df.iloc[0]['Error_Code']
+
+        #define list of data values 
+        data_values = np.array([[User_ID, Org_ID, Date, Timestamp, Entry_Type, Resource_ID, Error_Code]])
+
+        #define column names
+        column_values = ["User_ID", "Org_ID", "Date", "Timestamp", "Entry_Type", "Resource_ID", "Error_Code"]
+
+        #create pandas DataFrame out of specified data and column values 
+        df2 = pd.DataFrame(data = data_values, columns = column_values) 
+        return df2
 
     '''sanitize_user_id()
     # This is the sanitizer for invalid user IDs 
+    # Pads invalid user IDs with a 0 on the right side
     '''
-    def sanitize_user_id(self, df):
-        user_id = df.iloc[0]['User_ID']
-        print("User_ID: " + str(user_id))
-        return user_id
+    def sanitize_user_id(self, User_ID):
+        if len(str(User_ID)) < 9:
+            UserID = str(UserID) + "0"
+            UserID = int(UserID)
+            return User_ID
+        else : 
+            return User_ID
         
 
     '''sanitize_org_id()
     # This is the sanitizer for invalid organization IDs
     '''
-    def sanitize_org_id(self, df):
-        org_id = df.iloc[0]['Org_ID']
-        print("Org_ID: " + org_id)
-        return org_id
+    def sanitize_org_id(self, Org_ID):
+        if len(Org_ID) < 12:
+            Org_ID = "0000" + Org_ID
+            return Org_ID
+        else : 
+            return Org_ID
 
     '''sanitize_date()
     # This is the sanitizer for invalid dates
     '''
-    def sanitize_date(self, df): 
-        date = df.iloc[0]['Date']
-        print("Date: " + date)
-        return date
+    def sanitize_date(self, Date): 
+        current_date = datetime.datetime.now()
+        month = current_date.strftime("%m")
+        data_date_part1 = Date[0] + Date[1]
+        if data_date_part1 != month: 
+            # This works by re-generating the date in the correct format 
+            # For now this only works when sanitizing on the same day that the data was generated 
+            output = current_date.strftime("%m") + "/" + current_date.strftime("%d") + "/" + current_date.strftime("%Y")
+            return output
+        else:
+            return Date
 
     '''sanitize_timestamp()
     # This is the sanitizer for timestamps
     '''
-    def sanitize_timestamp(self, df):
-        timestamp = df.iloc[0]['Timestamp']
-        print("Timestamp: " + timestamp)
-        return timestamp 
+    def sanitize_timestamp(self, Timestamp):
+        return Timestamp
 
     '''sanitize_useless_column()
     # This is the sanitizer for the useless column

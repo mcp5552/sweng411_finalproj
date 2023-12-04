@@ -83,12 +83,15 @@ class DataHandler(Feature):
     #getCsv() reads a csv file in from s3 and returns a dataframe
     def getCsv(self):
         raw_df = wr.s3.read_csv(path = self.csv_path, path_suffix=['.csv'], dataset = True, boto3_session = self.boto3_session)
+            #Testing deleting the csv after reading
+        #type = str(raw_df.iloc[0]['Entry_Type']) # get the type of the read csv 
+        #file_path = self.csv_path + type + ".csv"
+        #wr.s3.delete_objects(file_path,  boto3_session = self.boto3_session) # delete the csv file after it is read 
         return raw_df
 
     #sendCsv() writes a dataframe as a csv file to the s3 bucket for csv files 
-    def sendCsv(self, df_in):
-        #testing dataset=True 
-        wr.s3.to_csv(df = df_in, path = self.csv_path, dataset = True, boto3_session = self.boto3_session)
+    def sendCsv(self, df_in, type):
+        wr.s3.to_csv(df = df_in, path = self.csv_path+str(type)+".csv", boto3_session = self.boto3_session)
 
     #load() writes a dataframe to the s3 bucket for parquet files 
     def load(self, df_in):

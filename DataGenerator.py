@@ -21,19 +21,16 @@ from ETLSystem import DataHandler
 # then sends that data to an S3 bucket for processing 
 '''
 def main():
-    # Instantiate a DataGenerator object 
-    dg = DataGenerator() 
+    dg = DataGenerator()  # Instantiate a DataGenerator object 
     # Get some data by using the DataGenerator generate() method
-    data = dg.generate()
+    data, data_type = dg.generate()
     print("Data Generated.") 
     print(data.to_string())
+    dh = DataHandler()  # Create a DataHandler instance 
 
-    # Create a DataHandler instance 
-    dh = DataHandler()
-
-    # call the sendCSV method on the data   
+    # Call the sendCSV method on the data   
     print("Sending data to cloud...") 
-    dh.sendCsv(data)
+    dh.sendCsv(data, data_type)
     print("Sent!") 
 
 ''' class DataGenerator
@@ -52,15 +49,15 @@ class DataGenerator(Feature):
     # 3 types of data
     """
     def generate(self): 
-        r = random.randint(1, 3)
-        print("Generating data of type: " + str(r) + "...")
-        if r == 1:
+        data_type = random.randint(1, 3)
+        print("Generating data of type: " + str(data_type) + "...")
+        if data_type == 1:
             data = self.generate1()
-        if r == 2:
+        if data_type == 2:
             data = self.generate2()
-        if r == 3:
+        if data_type == 3:
             data = self.generate3() 
-        return data 
+        return data, data_type
 
     ''' generate1()
     # This is the generator method for data of type 1
@@ -217,7 +214,7 @@ class DataGenerator(Feature):
     '''generate_timestamp()
     # Generates a string version of the time using the datetime library 
     # Valid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 12-hour time
-    # Invalid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 24-hour time 
+    # Invalid data case: timestamp in the form "HH:MM:SS" with hour in 24-hour time 
     '''
     def generate_timestamp(self):
         output = None 
@@ -226,7 +223,7 @@ class DataGenerator(Feature):
         if r == 1:
             output = date.strftime("%I") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
         if r == 2:
-            output = date.strftime("%H") + ":" + date.strftime("%M") + ":" + date.strftime("%S") + " " + date.strftime("%p")
+            output = date.strftime("%H") + ":" + date.strftime("%M") + ":" + date.strftime("%S")
         return output
 
     '''generate_region()
@@ -382,7 +379,7 @@ class DataGenerator(Feature):
         
 
     '''generate_cvv_number()
-    # Generates a string contaning 3 random integers
+    # Generates a string containing 3 random integers
     '''
     def generate_cvv_number(self): 
         output = ""
