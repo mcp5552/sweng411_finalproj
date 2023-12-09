@@ -27,7 +27,7 @@ def main():
             ETL_Server.serve() # attempt to find new data and extract, transform, and load it
         except: # if no data is found
             print("Waiting for data...")
-        time.sleep(1.5) # wait 1.5 seconds before trying again 
+        time.sleep(5) # wait 5 seconds before trying again 
     
 
 ''' class ETLServer
