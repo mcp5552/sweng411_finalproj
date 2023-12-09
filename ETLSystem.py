@@ -13,8 +13,13 @@ import warnings
 warnings.filterwarnings('ignore')
 import configparser
 
-#main method for demo purposes
+
+''' main() 
+# Now contains deprecated code that was used for development purposes
+'''
 def main():
+    pass
+
     '''
     dh = DataHandler()
     raw_df = dh.getCsv()
@@ -52,9 +57,7 @@ class Feature:
 # This class contains all methods for sending and retrieving data to AWS s3. 
 # It also handles the conversion to/from CSV and Parquet file formats. 
 '''
-class DataHandler(Feature):
-    #credents, aws_key, aws_secret, region, boto3_session, parquet_path  = None 
-    
+class DataHandler(Feature):   
     # Class constructor 
     # Initializes a boto3 session and sets up the buckets 
     def __init__(self):
@@ -80,24 +83,25 @@ class DataHandler(Feature):
         self.parquet_path_dir = 'parquet/'
         self.parquet_path = f"s3://{self.raw_s3_bucket}/{self.parquet_path_dir}"
         
-    #getCsv() reads a csv file in from s3 and returns a dataframe
+    # getCsv() reads a csv file in from s3 and returns a dataframe
     def getCsv(self):
         raw_df = wr.s3.read_csv(path = self.csv_path, path_suffix=['.csv'], dataset = True, boto3_session = self.boto3_session)
-            #Testing deleting the csv after reading
-        #type = str(raw_df.iloc[0]['Entry_Type']) # get the type of the read csv 
-        #file_path = self.csv_path + type + ".csv"
-        #wr.s3.delete_objects(file_path,  boto3_session = self.boto3_session) # delete the csv file after it is read 
+        
+        # Deleting the csv after reading
+        entry_type = str(raw_df.iloc[0]['Entry_Type']) # get the entry type of the read csv 
+        file_path = self.csv_path + entry_type + ".csv" 
+        wr.s3.delete_objects(file_path,  boto3_session = self.boto3_session) # delete the csv file after it is read 
         return raw_df
 
-    #sendCsv() writes a dataframe as a csv file to the s3 bucket for csv files 
+    # sendCsv() writes a dataframe as a csv file to the s3 bucket for csv files 
     def sendCsv(self, df_in, type):
         wr.s3.to_csv(df = df_in, path = self.csv_path+str(type)+".csv", boto3_session = self.boto3_session)
 
-    #load() writes a dataframe to the s3 bucket for parquet files 
+    # load() writes a dataframe to the s3 bucket for parquet files 
     def load(self, df_in):
         wr.s3.to_parquet(df = df_in, path = self.parquet_path, dataset=True, boto3_session = self.boto3_session)
 
-    #getParquet() reads a parquet file in the data warehouse and returns it as a CSV
+    # getParquet() reads a parquet file in the data warehouse and returns it as a CSV
     def getParquet(self):
         raw_df = wr.s3.read_parquet(path = self.parquet_path, path_suffix=['.parquet'], dataset = True, boto3_session = self.boto3_session)
         return raw_df

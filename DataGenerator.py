@@ -117,7 +117,7 @@ class DataGenerator(Feature):
         df = pd.DataFrame(data = data_values, columns = column_values) 
         return df 
 
-    '''generate3()
+    ''' generate3()
     # This is the generator method for data of type 3 
     '''
     def generate3(self):  
@@ -141,7 +141,7 @@ class DataGenerator(Feature):
         df = pd.DataFrame(data = data_values, columns = column_values) 
         return df 
 
-    '''generate_user_id() 
+    ''' generate_user_id() 
     # Generates a random 9-digit user id
     # Valid data case: 9 random digits
     # Invalid data case: 8 random digits 
@@ -161,7 +161,7 @@ class DataGenerator(Feature):
                 output = output + str(random_number)
             return output
 
-    '''generate_org_id()
+    ''' generate_org_id()
     # Generates a random 12-character organization id
     # Valid data case: 12 random digits and letters 
     # Invalid data case: 9 random digits and letters 
@@ -190,7 +190,7 @@ class DataGenerator(Feature):
                     output = output + randomLetter
             return output
 
-    '''generate_date()
+    ''' generate_date()
     # Generates a string version of the date using the datetime library 
     # Valid data case: date in the format "MM/DD/YYYY"
     # Invalid data case: date in the format "DD/MM/YYYY"
@@ -205,7 +205,7 @@ class DataGenerator(Feature):
             output = date.strftime("%d") + "/" + date.strftime("%m") + "/" + date.strftime("%Y")
         return output
 
-    '''generate_timestamp()
+    ''' generate_timestamp()
     # Generates a string version of the time using the datetime library 
     # Valid data case: timestamp in the form "HH:MM:SS AM/PM" with hour in 12-hour time
     # Invalid data case: timestamp in the form "HH:MM:SS" with hour in 24-hour time 
@@ -220,21 +220,21 @@ class DataGenerator(Feature):
             output = date.strftime("%H") + ":" + date.strftime("%M") + ":" + date.strftime("%S")
         return output
 
-    '''generate_region()
+    ''' generate_region()
     # We decided to use remove this field from our data. 
     But this method has been retained for extensibility.
     '''
     def generate_region(self):
         pass
 
-    '''generate_category()
+    ''' generate_category()
     # Returns a random integer from 0-9 
     '''
     def generate_category(self):
         category = random.randint(0, 9) 
         return category
 
-    '''generate_transaction_id()
+    ''' generate_transaction_id()
     # Returns a string of 13 consecutive random integers.
     '''
     def generate_transaction_id(self):
@@ -245,7 +245,7 @@ class DataGenerator(Feature):
         return output
 
 
-    '''generate_transaction_code()
+    ''' generate_transaction_code()
     # Returns a string of random integers from 0 to 3.
     '''
     def generate_transaction_code(self):
@@ -253,7 +253,7 @@ class DataGenerator(Feature):
         return output
         
 
-    '''generate_cart_id()
+    ''' generate_cart_id()
     # Generates a string of 13 random integers.
     '''
     def generate_cart_id(self):
@@ -262,7 +262,7 @@ class DataGenerator(Feature):
         res = ''.join(map(str, rand_cart_id))
         return "#" + res
 
-    '''generate_billing_street_1()
+    ''' generate_billing_street_1()
     # Returns a string containing a random number from 1-9999 followed by a space then
     # A randomly generated street name. Street names are 2-word names with each word
     # randomly generated from a separate list of possible words e.g. "Oak St"
@@ -282,7 +282,7 @@ class DataGenerator(Feature):
     def generate_billing_street_2(self):
         return ""
 
-    '''generate_billing_city()
+    ''' generate_billing_city()
     # This method generates a random city name from a list of 300 possible cities 
     '''
     def generate_billing_city(self): 
@@ -329,7 +329,7 @@ class DataGenerator(Feature):
         random_number = random.randint(0, 299)
         return city_Array[random_number]
 
-    '''generate_billing_state()
+    ''' generate_billing_state()
     # Returns a random 2-character state abbreviation string from a list of 50
     '''
     def generate_billing_state(self):
@@ -341,7 +341,7 @@ class DataGenerator(Feature):
         random_number = random.randint(0, 49)
         return output_Array[random_number]
 
-    '''generate_billing_zip() 
+    ''' generate_billing_zip() 
     # Generates a string of 5 random numbers.
     '''
     def generate_billing_zip(self):
@@ -351,13 +351,13 @@ class DataGenerator(Feature):
             output = output + str(random_number)
         return output
 
-    '''generate_billing_country()
+    ''' generate_billing_country()
     # We decided to use USA as the billing country. But this method has been retained for extensibility.
     '''
     def generate_billing_country(self):  
         return "USA"
 
-    '''generate_credit_card_number()
+    ''' generate_credit_card_number()
     # Generates a string containing 4 sequences of 4 random ints, with 3 dashes 
     # inserted after the 1st through third sequences of ints 
     '''
@@ -372,7 +372,7 @@ class DataGenerator(Feature):
         return output 
         
 
-    '''generate_cvv_number()
+    ''' generate_cvv_number()
     # Generates a string containing 3 random integers
     '''
     def generate_cvv_number(self): 
@@ -383,7 +383,7 @@ class DataGenerator(Feature):
         return output
         
 
-    '''generate_card_type()
+    ''' generate_card_type()
     # Generates a string randomly containing either 'Mastercard', 
     # 'Visa', 'American Express', or 'Discover'
     '''
@@ -392,7 +392,7 @@ class DataGenerator(Feature):
         random_number = random.randint(0, 3)
         return card_Array[random_number]
 
-    '''generate_transaction_amount()
+    ''' generate_transaction_amount()
     # Generates string containing an integer between 0-1000 followed by a "."
     # then a sequence of two random integers between 0-9 
     '''
@@ -403,7 +403,7 @@ class DataGenerator(Feature):
         output = dollars + "." + cents_1 + cents_2
         return output
 
-    '''generate_resource_ID()
+    ''' generate_resource_ID()
     # This method generates a string containing a sequence of 5 random characters followed 
     # by an underscore then a sequence of 6 random integers and finally another random character. 
     '''
